@@ -3,6 +3,7 @@ require('dotenv').config()
 const url = process.env.DB_URL
 
 const mongoose = require('mongoose')
+const { number } = require('zod')
 console.log(url)
 
 const UserSchema = mongoose.Schema({
@@ -25,8 +26,22 @@ const UserSchema = mongoose.Schema({
     }
 })
 
+const AccountSchema = mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserModel',
+        required: true
+    },
+    Amount: {
+        type: number,
+        required: true
+    }
+})
+
 const UserModel = mongoose.model('UserModel', UserSchema)
 
+const AccountModel = mongoose.model('AccountModel', AccountSchema)
 module.exports = {
-    UserModel
+    UserModel,
+    AccountModel
 }
