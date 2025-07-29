@@ -162,14 +162,16 @@ router.put('/edit', authMiddleware, async (req, res) => {
 router.get('/users-data', authMiddleware, async (req, res) => {
     const filter = req.query.filter || "";
 
-    const users = await UserModel.findOne({
+    const users = await UserModel.find({
         $or: [{
             firstName: {
-                "$regex": filter
+                "$regex": filter,
+                "$options": "i"
             }
         }, {
             lastName: {
-                "$regex": filter
+                "$regex": filter,
+                "$options": "i"
             }
         }]
     })
